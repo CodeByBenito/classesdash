@@ -9,7 +9,7 @@ const totalLessonsDoneEl = document.getElementById("total-lessons-done");
 const totalLessonsRemainingEl = document.getElementById("total-lessons-remaining");
 const themeBtn = document.getElementById("toggle-theme");
 
-// Renderizar
+// Renderizar alunos
 function renderStudents() {
     studentList.innerHTML = "";
     let totalLessonsDone = 0;
@@ -30,11 +30,15 @@ function renderStudents() {
                 ${student.lessonsDone}/${student.totalClasses}
             </td>
             <td>
-                <button onclick="incrementLesson(${index})">+1</button>
-                <button onclick="deleteStudent(${index})">🗑</button>
+                <button class="increment-btn">+1</button>
+                <button class="delete-btn">🗑</button>
             </td>
         `;
         studentList.appendChild(tr);
+
+        // Event listeners para cada botão
+        tr.querySelector(".increment-btn").addEventListener("click", () => incrementLesson(index));
+        tr.querySelector(".delete-btn").addEventListener("click", () => deleteStudent(index));
     });
 
     totalStudentsEl.textContent = students.length;
@@ -47,12 +51,16 @@ function renderStudents() {
 // Adicionar aluno
 studentForm.addEventListener("submit", (e) => {
     e.preventDefault();
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
     const level = document.getElementById("level").value;
     const totalClasses = parseInt(document.getElementById("total-classes").value);
 
-    // Adiciona o novo aluno à lista
+    if (!name || !email || !level || isNaN(totalClasses) || totalClasses <= 0) {
+        alert("Preencha todos os campos corretamente!");
+        return;
+    }
+
     students.push({
         name,
         email,
@@ -75,26 +83,26 @@ function incrementLesson(index) {
 
 // Deletar aluno
 function deleteStudent(index) {
-    students.splice(index, 1);
-    renderStudents();
+    if (confirm(`Tem certeza que deseja deletar ${students[index].name}?`)) {
+        students.splice(index, 1);
+        renderStudents();
+    }
 }
 
-// Lógica para o tema escuro
+// Tema escuro
 themeBtn.addEventListener("click", () => {
     document.body.classList.toggle("dark");
-    // Salva a preferência do usuário no localStorage
     localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
 });
 
-// Inicialização da aplicação
+// Inicialização
 document.addEventListener("DOMContentLoaded", () => {
-    // Carrega a preferência de tema do localStorage
-    if (localStorage.getItem("theme") === "dark") {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
         document.body.classList.add("dark");
-    } else if (localStorage.getItem("theme") === "light") {
+    } else if (savedTheme === "light") {
         document.body.classList.remove("dark");
     } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        // Se não houver preferência salva, usa a do sistema
         document.body.classList.add("dark");
     }
 
