@@ -13,8 +13,6 @@ Um painel simples e intuitivo para ajudar professores e coordenadores a gerencia
 - **Estatísticas Rápidas:** Resumo visual do total de alunos, aulas concluídas e aulas restantes.  
 - **Modo Noturno:** Alterne para o tema escuro com um clique. Sua preferência é salva no navegador!  
 
-![Exemplo do Dashboard](https://via.placeholder.com/600x300.png?text=Dashboard+Speak%26Go)
-
 ---
 
 ## 💻 Tecnologias Utilizadas
@@ -30,4 +28,32 @@ Um painel simples e intuitivo para ajudar professores e coordenadores a gerencia
 
 ### 1. Clone o Repositório
 ```bash
+
 git clone https://github.com/CodeByBenito/dashboardclass.git
+
+
+2. Inicie a Aplicação
+
+Basta abrir o arquivo index.html em seu navegador.
+
+3. Comece a Gerenciar!
+
+Preencha o formulário para adicionar um novo aluno.
+
+Clique no botão +1 para marcar uma aula como concluída.
+
+Clique na lixeira 🗑️ para remover um aluno da lista.
+
+Use o ícone da lua 🌙 para alternar entre os temas claro e escuro.
+
+🌟 Futuro: Rumo à Versão 2.0!
+
+Estamos planejando grandes melhorias:
+
+Banco de Dados: Implementação com Firebase Cloud Firestore para armazenamento seguro e robusto.
+
+Relatórios e Análises: Capacidade de gerar relatórios detalhados sobre o progresso e desempenho da turma.
+
+Acesso por Múltiplos Dispositivos: Consulte seus dados de qualquer computador ou celular.
+
+Feito com ❤️ por Benito
