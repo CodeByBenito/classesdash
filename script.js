@@ -22,6 +22,7 @@ function renderStudents() {
         const tr = document.createElement("tr");
         tr.innerHTML = `
             <td>${student.name}</td>
+            <td>${student.email}</td>
             <td>${student.level}</td>
             <td>
                 <div class="progress-bar">
@@ -30,15 +31,11 @@ function renderStudents() {
                 ${student.lessonsDone}/${student.totalClasses}
             </td>
             <td>
-                <button class="increment-btn">+1</button>
-                <button class="delete-btn">🗑</button>
+                <button class="increment-btn" data-index="${index}">+1</button>
+                <button class="delete-btn" data-index="${index}">🗑</button>
             </td>
         `;
         studentList.appendChild(tr);
-
-        // Event listeners para cada botão
-        tr.querySelector(".increment-btn").addEventListener("click", () => incrementLesson(index));
-        tr.querySelector(".delete-btn").addEventListener("click", () => deleteStudent(index));
     });
 
     totalStudentsEl.textContent = students.length;
@@ -73,21 +70,23 @@ studentForm.addEventListener("submit", (e) => {
     renderStudents();
 });
 
-// Incrementar aula
-function incrementLesson(index) {
-    if (students[index].lessonsDone < students[index].totalClasses) {
-        students[index].lessonsDone++;
-        renderStudents();
-    }
-}
+// Delegação de eventos para botões da tabela
+studentList.addEventListener("click", (e) => {
+    const target = e.target;
+    const index = target.dataset.index;
 
-// Deletar aluno
-function deleteStudent(index) {
-    if (confirm(`Tem certeza que deseja deletar ${students[index].name}?`)) {
-        students.splice(index, 1);
-        renderStudents();
+    if (target.classList.contains("increment-btn")) {
+        if (students[index].lessonsDone < students[index].totalClasses) {
+            students[index].lessonsDone++;
+            renderStudents();
+        }
+    } else if (target.classList.contains("delete-btn")) {
+        if (confirm(`Tem certeza que deseja deletar ${students[index].name}?`)) {
+            students.splice(index, 1);
+            renderStudents();
+        }
     }
-}
+});
 
 // Tema escuro
 themeBtn.addEventListener("click", () => {
